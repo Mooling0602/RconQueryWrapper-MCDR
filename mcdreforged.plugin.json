@@ -1,0 +1,17 @@
+{
+    "id": "rcon_query_wrapper",
+    "version": "0.0.1",
+    "name": "RconQueryWrapper",
+    "description": {
+        "en_us": "A wrapper for executing commands and get results with rcon in MCDR.",
+        "zh_cn": "一个用于在MCDR中使用Rcon执行命令并获取结果的包装器。"
+    },
+    "author": "Mooling0602",
+    "link": "https://github.com/Mooling0602/RconQueryWrapper-MCDR",
+    "dependencies": {
+        "mcdreforged": ">=2.14.1"
+    },
+    "resources": [
+        "lang"
+    ]
+}
