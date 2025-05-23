@@ -17,7 +17,7 @@ With this wrapper, you can easily fix these issues and make your plugin more sta
 ## How this wrapper works?
 This wrapper is based on the `ServerInterface.rcon_query(command: str)` method, of course.
 
-First, this plugin(this wrapper) uses a `ThreadPoolExecutor`(with 1 worker thread) to fake-asynchronously run `PluginServerInterface.rcon_query(command)`, to avoid blocking the TaskExecutor during RCON operations.
+First, this plugin(this wrapper) uses a `ThreadPoolExecutor`(with 1 worker thread) to fake-asynchronously run `PluginServerInterface.rcon_query(command)`.
 
 Then, it waits up to 5 seconds for the result. If no response, it will log a warning to the console, but continue to wait for the response. In this case, plugin will try to use undocumented interfaces of MCDR for reopening the RCON connection between MCDR and the Minecraft server.
 
@@ -51,8 +51,13 @@ import rcon_query_wrapper
 
 3. Use the function, here is an example:
 ```python
+# NOQA
 from mcdreforged.api.types import PluginServerInterface
-from rcon_query_wrapper import rcon_query_wrapper
+from mcdreforged.api.all import ServerInterface
+from rcon_query_wrapper import rcon_query_wrapper, rcon_query
+
+
+psi = ServerInterface.psi()
 
 
 def your_function(server: PluginServerInterface):
@@ -61,4 +66,12 @@ def your_function(server: PluginServerInterface):
     if rcon_q:
         result = rcon_q(server, command)
     server.logger.info(result)
+
+
+@rcon_query('list', server=psi, command_result_arg='rcon_result')
+def your_function_with_decorator(rcon_result: str):
+    psi.logger.info(rcon_result)
 ```
+
+## Other
+i18n is still working...

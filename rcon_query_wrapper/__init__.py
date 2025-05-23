@@ -117,14 +117,14 @@ def query_rcon_result(server: PluginServerInterface | ServerInterface, command: 
     return result
 
 
-@rcon_query('list', command_result_arg='rcon_result')
+@rcon_query('list', server=psi, command_result_arg='rcon_result')
 def test_rcon_query_decorator(
-    server: PluginServerInterface | ServerInterface, rcon_result: str
+    rcon_result: str
 ):
-    server.logger.info(rcon_result)
+    psi.logger.info(rcon_result)
 
 
 @builder.command('!!@rcon debug decorator')
 def on_debug_decorator(src: CommandSource, ctx: Optional[CommandContext] = None):  # pylint: disable=unused-argument
-    server = src.get_server()
-    test_rcon_query_decorator(server)  # pylint: disable=no-value-for-parameter
+    # server = src.get_server()
+    test_rcon_query_decorator()  # pylint: disable=no-value-for-parameter
