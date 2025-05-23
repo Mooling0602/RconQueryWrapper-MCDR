@@ -73,13 +73,18 @@ def on_server_startup(server: PluginServerInterface):  # pylint: disable=unused-
         server.logger.error("Rcon may be not uasable, please check your configuration and connection!")
 
 
-def rcon_query(command: str, server: Optional[PluginServerInterface | ServerInterface] = None) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+def rcon_query(
+        command: str,
+        server: Optional[PluginServerInterface | ServerInterface] = None,
+        command_result_arg: str = "result"
+) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
             _server = server if server is not None else psi
             result = rcon_query_wrapper(_server, command)
-            return func(result=result, *args, **kwargs)
+            kwargs[command_result_arg] = result
+            return func(*args, **kwargs)
         return wrapper
     return decorator
 
@@ -112,9 +117,11 @@ def query_rcon_result(server: PluginServerInterface | ServerInterface, command: 
     return result
 
 
-@rcon_query('list')
-def test_rcon_query_decorator(server: PluginServerInterface | ServerInterface, result: str):
-    server.logger.info(result)
+@rcon_query('list', command_result_arg='rcon_result')
+def test_rcon_query_decorator(
+    server: PluginServerInterface | ServerInterface, rcon_result: str
+):
+    server.logger.info(rcon_result)
 
 
 @builder.command('!!@rcon debug decorator')
