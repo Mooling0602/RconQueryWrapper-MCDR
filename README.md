@@ -17,7 +17,7 @@ With this wrapper, you can easily fix these issues and make your plugin more sta
 ## How this wrapper works?
 This wrapper is based on the `ServerInterface.rcon_query(command: str)` method, of course.
 
-First, this plugin(this wrapper) uses a `ThreadPoolExecutor`(with 1 worker thread) to asynchronously run `PluginServerInterface.rcon_query(command)`, to avoid blocking the TaskExecutor during RCON operations.
+First, this plugin(this wrapper) uses a `ThreadPoolExecutor`(with 1 worker thread) to fake-asynchronously run `PluginServerInterface.rcon_query(command)`, to avoid blocking the TaskExecutor during RCON operations.
 
 Then, it waits up to 5 seconds for the result. If no response, it will log a warning to the console, but continue to wait for the response. In this case, plugin will try to use undocumented interfaces of MCDR for reopening the RCON connection between MCDR and the Minecraft server.
 
