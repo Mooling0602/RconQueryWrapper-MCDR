@@ -73,5 +73,7 @@ def your_function_with_decorator(rcon_result: str):
     psi.logger.info(rcon_result)
 ```
 
+Arguments `server` and `command_result_arg` in `@rcon_query` are optional. If `command_result_arg` is not set, you should make your function accept a `result` argument as the result of the rcon command.
+
 ## Other
 i18n is still working...
