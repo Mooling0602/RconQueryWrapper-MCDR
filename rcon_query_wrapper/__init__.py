@@ -91,7 +91,8 @@ def rcon_query(
 
 def rcon_query_wrapper(server: PluginServerInterface | ServerInterface, command: str) -> str | None:
     if not rcon_fine:
-        if not check_before_query():
+        _check_before_query = check_before_query()
+        if not _check_before_query:
             return None
     return query_rcon_result(server, command)
 
